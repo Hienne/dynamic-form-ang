@@ -1,0 +1,26 @@
+<ng-container [formGroup]="form">
+  <ng-container [ngSwitch]="formItem.type">
+     <!-- Input text -->
+    <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'text'">
+      <mat-label>{{ formItem.label }}</mat-label>
+      <input
+        matInput
+        type="text"
+        [formControlName]="formItem.id"
+      />
+    </mat-form-field>
+    
+    <!-- Select -->
+    <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'select'">
+      <mat-label>{{ formItem.label }}</mat-label>
+      <mat-select [formControlName]="formItem.id">
+        <mat-option [value]="null">Please select</mat-option>
+        <mat-option
+          *ngFor="let menuOption of formItem.selectMenuOptions | keyvalue"
+          [value]="menuOption.key"
+        >{{ menuOption.value }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  
+</ng-container>
