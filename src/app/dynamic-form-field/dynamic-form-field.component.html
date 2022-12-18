@@ -1,36 +1,170 @@
 <ng-container [formGroup]="form">
   <ng-container [ngSwitch]="formItem.controlType">
-     <!-- Input text -->
-    <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'text'">
+    <!-- Input text -->
+    <mat-form-field
+      [appearance]="appearance"
+      [class]="formItem.cssClass"
+      *ngSwitchCase="'text'"
+    >
       <mat-label>{{ formItem.label }}</mat-label>
       <input
         matInput
+        trimTextBox
         type="text"
         [formControlName]="formItem.key"
+        [disabledControl]="formItem.disabled"
       />
     </mat-form-field>
-    
-    <!-- Select -->
-    <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'dropdown'">
+
+    <mat-form-field
+      [appearance]="appearance"
+      [class]="formItem.cssClass"
+      *ngSwitchCase="'currency'"
+    >
       <mat-label>{{ formItem.label }}</mat-label>
-      <mat-select [formControlName]="formItem.key">
-        <mat-option *ngIf="formItem.showDefaultValue" [value]="''">Please select</mat-option>
-        <ng-container *ngIf="isIterable(formItem.options)">
+      <input
+        matInput
+        numberFormat
+        type="text"
+        [formControlName]="formItem.key"
+        [disabledControl]="formItem.disabled"
+      />
+    </mat-form-field>
+
+    <!-- Select -->
+    <mat-form-field
+      [appearance]="appearance"
+      [class]="formItem.cssClass"
+      *ngSwitchCase="'dropdown'"
+    >
+      <mat-label>{{ formItem.label }}</mat-label>
+      <mat-select
+        [formControlName]="formItem.key"
+        [disabledControl]="formItem.disabled"
+      >
+        <mat-option *ngIf="formItem.showDefaultValue" [value]="''"
+          >Please select</mat-option
+        >
+        <ng-container
+          *ngIf="isIterable(formItem.options); else isEnumerableDropdown"
+        >
           <mat-option
-          *ngFor="let menuOption of formItem.options"
-          [value]="menuOption.key"
-        >{{ menuOption.value }}</mat-option>
+            *ngFor="let option of formItem.options"
+            [value]="option.key"
+            >{{ option.value }}</mat-option
+          >
         </ng-container>
 
-        <ng-container *ngIf="!isIterable(formItem.options)">
+        <ng-template #isEnumerableDropdown>
           <mat-option
-          *ngFor="let menuOption of formItem.options | keyvalue"
-          [value]="menuOption.key"
-        >{{ menuOption.value }}</mat-option>
+            *ngFor="let option of formItem.options | keyvalue"
+            [value]="option.key"
+            >{{ option.value }}</mat-option
+          >
+        </ng-template>
+      </mat-select>
+    </mat-form-field>
+
+    <div [class]="formItem.cssClass" *ngSwitchCase="'radio'">
+      <label>{{ formItem.label }}:</label>
+      <mat-radio-group
+        [formControlName]="formItem.key"
+        [disabledControl]="formItem.disabled"
+      >
+        <ng-container *ngIf="isIterable(formItem.options); else isEnumerableRadio">
+          <mat-radio-button
+            *ngFor="let option of formItem.options"
+            [value]="option.key"
+          >
+            {{ option.value }}
+          </mat-radio-button>
         </ng-container>
-        
+
+        <ng-template #isEnumerableRadio>
+          <mat-radio-button
+            *ngFor="let option of formItem.options | keyvalue"
+            [value]="option.key"
+          >
+            {{ option.value }}
+          </mat-radio-button>
+        </ng-template>
+      </mat-radio-group>
+    </div>
+
+    <mat-form-field *ngSwitchCase="'date'" [appearance]="appearance" [class]="formItem.cssClass">
+      <mat-label>{{formItem.label}}</mat-label>
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        [formControlName]="formItem.key"
+        readonly
+        [disabledControl]="formItem.disabled"
+      />
+      <button
+        matSuffix
+        matDatepickerToggleIcon
+        mat-icon-button
+        type="button"
+        [disabled]="formItem.disabled"
+        (click)="clearDate($event, [formItem.key])"
+      >
+        <mat-icon fontIcon="clear"></mat-icon>
+      </button>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="datepicker"
+        [disabled]="formItem.disabled"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field *ngSwitchCase="'daterange'" [class]="formItem.cssClass" [appearance]="appearance">
+      <mat-label>{{formItem.label[0]}} - {{ formItem.label[1] }}</mat-label>
+      <mat-date-range-input [rangePicker]="daterangePicker">
+        <input matStartDate
+          placeholder="Từ ngày"
+          [formControlName]="formItem.key[0]"
+          readonly />
+        <input matEndDate
+          placeholder="Đến ngày"
+          [formControlName]="formItem.key[1]"
+          readonly />
+      </mat-date-range-input>
+      <button matSuffix
+        matDatepickerToggleIcon
+        mat-icon-button
+        type="button"
+        [disabled]="formItem.disabled"
+        (click)="clearDate($event, formItem.key)"
+        >
+        <mat-icon fontIcon="clear"></mat-icon>
+      </button>
+      <mat-datepicker-toggle matSuffix
+        [for]="daterangePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #daterangePicker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field *ngSwitchCase="'select'" [class]="formItem.cssClass" [appearance]="appearance">
+      <mat-label>{{formItem.label}}</mat-label>
+      <mat-select [formControlName]="formItem.key" [disabledControl]="formItem.disabled" multiple>
+        <ng-container
+          *ngIf="isIterable(formItem.options); else isEnumerableDropdown"
+        >
+          <mat-option
+            *ngFor="let option of formItem.options"
+            [value]="option.key"
+            >{{ option.value }}</mat-option
+          >
+        </ng-container>
+
+        <ng-template #isEnumerableDropdown>
+          <mat-option
+            *ngFor="let option of formItem.options | keyvalue"
+            [value]="option.key"
+            >{{ option.value }}</mat-option
+          >
+        </ng-template>
       </mat-select>
     </mat-form-field>
   </ng-container>
-  
 </ng-container>
