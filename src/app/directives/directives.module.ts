@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DecimalOnlyDirective } from './decimal-only.directive';
 import { NumberOnlyDirective } from './number-only.directive';
+import { DisabledControlDirective } from './disabled-control.directive';
 
 
 
@@ -12,7 +13,8 @@ import { NumberOnlyDirective } from './number-only.directive';
     TrimTextBoxDirective,
     NumberFormatDirective,
     DecimalOnlyDirective,
-    NumberOnlyDirective
+    NumberOnlyDirective,
+    DisabledControlDirective
   ],
   imports: [
     CommonModule
@@ -21,7 +23,8 @@ import { NumberOnlyDirective } from './number-only.directive';
     TrimTextBoxDirective,
     NumberFormatDirective,
     DecimalOnlyDirective,
-    NumberOnlyDirective
+    NumberOnlyDirective,
+    DisabledControlDirective
   ]
 })
 export class DirectivesModule { }

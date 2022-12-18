@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
-  selector: '[NumberOnly]'
+  selector: '[numberOnly]'
 })
 export class NumberOnlyDirective {
   @Input() disabledNumbersOnly: boolean = false;

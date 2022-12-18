@@ -35,7 +35,7 @@ export class TrimTextBoxDirective {
       currentValue.startsWith(whitespace) ||
       currentValue.endsWith(whitespace)
     ) {
-      currentValue.trim();
+      this.ngControl.control?.patchValue(currentValue.trim());
     }
   }
 }
