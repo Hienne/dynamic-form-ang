@@ -1,24 +1,34 @@
 <ng-container [formGroup]="form">
-  <ng-container [ngSwitch]="formItem.type">
+  <ng-container [ngSwitch]="formItem.controlType">
      <!-- Input text -->
     <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'text'">
       <mat-label>{{ formItem.label }}</mat-label>
       <input
         matInput
         type="text"
-        [formControlName]="formItem.id"
+        [formControlName]="formItem.key"
       />
     </mat-form-field>
     
     <!-- Select -->
-    <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'select'">
+    <mat-form-field [appearance]="appearance" [class]="formItem.cssClass" *ngSwitchCase="'dropdown'">
       <mat-label>{{ formItem.label }}</mat-label>
-      <mat-select [formControlName]="formItem.id">
-        <mat-option [value]="null">Please select</mat-option>
-        <mat-option
-          *ngFor="let menuOption of formItem.selectMenuOptions | keyvalue"
+      <mat-select [formControlName]="formItem.key">
+        <mat-option *ngIf="formItem.showDefaultValue" [value]="''">Please select</mat-option>
+        <ng-container *ngIf="isIterable(formItem.options)">
+          <mat-option
+          *ngFor="let menuOption of formItem.options"
           [value]="menuOption.key"
         >{{ menuOption.value }}</mat-option>
+        </ng-container>
+
+        <ng-container *ngIf="!isIterable(formItem.options)">
+          <mat-option
+          *ngFor="let menuOption of formItem.options | keyvalue"
+          [value]="menuOption.key"
+        >{{ menuOption.value }}</mat-option>
+        </ng-container>
+        
       </mat-select>
     </mat-form-field>
   </ng-container>

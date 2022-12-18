@@ -1,6 +1,6 @@
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { Component, Input } from '@angular/core';
-import { DynamicFormFieldModel } from '../dynamic-form-field.model';
+import { DynamicFormField } from '../dynamic-form-field.model';
 import {MatFormFieldAppearance} from '@angular/material/form-field';
 
 @Component({
@@ -9,13 +9,21 @@ import {MatFormFieldAppearance} from '@angular/material/form-field';
   styleUrls: ['./dynamic-form-field.component.css']
 })
 export class DynamicFormFieldComponent {
-  @Input() formItem!: DynamicFormFieldModel;
+  @Input() formItem!: DynamicFormField<string>;
   @Input() appearance: MatFormFieldAppearance = 'fill'
 
   form!: FormGroup;
 
   constructor(private rootFormGroup: FormGroupDirective) {
     this.form = this.rootFormGroup.control
+  }
+
+  isIterable(obj: any) {
+    // checks for null and undefined
+    if (obj == null) {
+      return false;
+    }
+    return typeof obj[Symbol.iterator] === 'function';
   }
 
 }
