@@ -1,3 +1,4 @@
+import { DirectivesModule } from './directives/directives.module';
 import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -10,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
+import { TrimTextBoxDirective } from './directives/trim-text-box.directive';
+import { NumberFormatDirective } from './directives/number-format.directive';
 
 const MAT_MODULES = [
   MatInputModule,
@@ -20,13 +23,14 @@ const MAT_MODULES = [
 @NgModule({
   declarations: [
     AppComponent,
-    DynamicFormFieldComponent
+    DynamicFormFieldComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CommonModule,
+    DirectivesModule,
 
     ...MAT_MODULES
   ],
