@@ -1,5 +1,6 @@
 import { Component, OnInit, Self } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { dynamicFormFields } from './controls';
 import { DynamicFormControlService } from './dynamic-form-field/dynamic-form-control.service';
 import { DynamicFormField } from './dynamic-form-field/dynamic-form-field.model';
@@ -10,13 +11,40 @@ import { DynamicFormField } from './dynamic-form-field/dynamic-form-field.model'
   providers: [DynamicFormControlService],
 })
 export class AppComponent implements OnInit {
+
+  options = [
+    {
+      label: 'label1',
+      value: 'value1'
+    },
+    {
+      label: 'label1',
+      value: 'value1'
+    },
+    {
+      label: 'label1',
+      value: 'value1'
+    },
+    {
+      label: 'label1',
+      value: 'value1'
+    },
+    {
+      label: 'label1',
+      value: 'value1'
+    },
+  
+  ]
+  test = new FormControl();
   myForm!: FormGroup;
   dynamicFormFields!: DynamicFormField<any>[];
 
   constructor(
     private fb: FormBuilder,
     @Self() private dynamicFormControlService: DynamicFormControlService<any>
-  ) {}
+  ) {
+    console.log(environment.baseUrl);
+  }
 
   ngOnInit() {
     this.myForm = this.fb.group({});

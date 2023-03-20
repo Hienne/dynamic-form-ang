@@ -1,0 +1,26 @@
+<mat-select
+  #select
+  multiple
+  [value]="value"
+  (selectionChange)="onSelectionChange()"
+  [disabled]="disabled"
+  [required]="required"
+  [placeholder]="placeholder"
+>
+  <div class="cursor-pointer select-all" (click)="onSelectAll()">
+    <mat-checkbox
+      [(ngModel)]="allSelected"
+      color="primary"
+      [ngModelOptions]="{ standalone: true }"
+      (click)="$event.preventDefault()"
+      (change)="toggleAllSelection()"
+      >Tất cả</mat-checkbox
+    >
+  </div>
+  <mat-select-trigger>
+        {{ allSelected ? 'Tất cả' : ngControl.control?.value }}
+      </mat-select-trigger>
+  <mat-option *ngFor="let item of options" [value]="item[optionValue]">
+    {{ item[optionLabel] }}
+  </mat-option>
+</mat-select>

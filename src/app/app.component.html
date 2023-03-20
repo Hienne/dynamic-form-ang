@@ -1,8 +1,13 @@
-<div [formGroup]="myForm" class="pt-5 w-3/4 mx-auto">
+<div [formGroup]="myForm" class="w-3/4 pt-5 mx-auto">
   <ng-container *ngFor="let formItem of dynamicFormFields">
     <app-dynamic-form-field [formItem]="formItem"></app-dynamic-form-field>
   </ng-container>
 </div>
+
+<mat-form-field><em></em>
+  <mat-label>heh</mat-label>
+  <multiple-select [formControl]='test' [options]="options" optionLabel="label" optionValue="value"></multiple-select>
+</mat-form-field>
 
 <pre>
   {{myForm.value | json}}
