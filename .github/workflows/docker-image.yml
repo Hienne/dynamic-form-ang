@@ -16,8 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Git User
+      - name: Setup Git Email
         run: git config --global user.email "nguyenvanhiencntt3@gmail.com"
+
+      - name: Setup Git User
         run: git config --global user.name "hien dep trai"
         
       - name: Set up node.js
