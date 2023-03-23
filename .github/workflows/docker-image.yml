@@ -38,7 +38,7 @@ jobs:
         run: npm run build:prod
         
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@3
+        uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh_pages
           build_dir: dist/dynamic-form-ang
