@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     @Self() private dynamicFormControlService: DynamicFormControlService<any>
   ) {
     console.log(environment.baseUrl);
-    console.log('test github actions');
+    console.log('test github actions 2');
   }
 
   ngOnInit() {
