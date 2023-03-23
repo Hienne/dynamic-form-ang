@@ -15,9 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup github user
-        uses: fregante/setup-git-user@v2
+        run: git config --global user.email "nguyenvanhiencntt3@gmail.com"
+        run: git config --global user.name "hien dep trai"
         
       - name: Set up node.js
         uses: actions/setup-node@v3.3.0
