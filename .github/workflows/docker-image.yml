@@ -24,5 +24,25 @@ jobs:
           
       - name: Install dependencies
         run: npm ci
+        
+      - name: Replace secret
+        uses: cschleiden/replace-token@v1
+        with:
+          tokenPrefix: '{'
+          tokenSuffix: '}'
+          files: 'src/environments/environment.prod.ts'
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+        
+      - name: Build
+        run: npm run build:prod
+        
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@3
+        with:
+          target_branch: gh_pages
+          build_dir: dist/dynamic-form-ang
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       
