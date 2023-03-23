@@ -15,11 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup git user
-        run: |
-          git config --global user.name "hien dep trai"
-          git config --global user.email "nguyenvanhiencntt3@gmail.com"
         
       - name: Set up node.js
         uses: actions/setup-node@v3.3.0
@@ -51,6 +46,11 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy
-        run: npm run deploy
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/dynamic-form-ang
+          enable_jekyll: true
     
       
