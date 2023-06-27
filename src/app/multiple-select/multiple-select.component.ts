@@ -31,7 +31,7 @@ export class CustomErrorMatcher implements ErrorStateMatcher {
   styles: [
     `
       .select-all {
-        margin: 5px 17px;
+        margin-left: 5px;
       }
     `,
   ],

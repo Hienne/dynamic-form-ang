@@ -12,7 +12,7 @@
       [(ngModel)]="allSelected"
       color="primary"
       [ngModelOptions]="{ standalone: true }"
-      (click)="$event.preventDefault()"
+      (click)="$event.stopPropagation()"
       (change)="toggleAllSelection()"
       >Tất cả</mat-checkbox
     >
