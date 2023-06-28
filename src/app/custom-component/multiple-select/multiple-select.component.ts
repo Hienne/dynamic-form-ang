@@ -1,18 +1,33 @@
 import { CommonModule } from '@angular/common';
 import {
-  Component, Input, OnDestroy, Optional,
-  Self, ViewChild
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  Optional,
+  Self,
+  ViewChild,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormsModule,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ErrorStateMatcher, MatOption } from '@angular/material/core';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatFormFieldControl,
+  MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Subject } from 'rxjs';
 
 export class CustomErrorMatcher implements ErrorStateMatcher {
   isErrorState(control: AbstractControl): boolean {
-      return control?.dirty && control.invalid;
+    return control?.dirty && control.invalid;
   }
 }
 @Component({
@@ -25,7 +40,7 @@ export class CustomErrorMatcher implements ErrorStateMatcher {
 
     MatFormFieldModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   templateUrl: './multiple-select.component.html',
   styles: [
@@ -42,15 +57,12 @@ export class CustomErrorMatcher implements ErrorStateMatcher {
     },
     {
       provide: ErrorStateMatcher,
-      useClass: CustomErrorMatcher
-    }
+      useClass: CustomErrorMatcher,
+    },
   ],
 })
 export class MultipleSelectComponent
-  implements
-    MatFormFieldControl<any>,
-    ControlValueAccessor,
-    OnDestroy
+  implements MatFormFieldControl<any>, ControlValueAccessor, OnDestroy
 {
   static nextId = 0;
   @ViewChild('select') selectTpl!: MatSelect;
@@ -78,14 +90,18 @@ export class MultipleSelectComponent
   }
   private _options: any[] | null = [];
 
-  constructor(@Optional() @Self() public ngControl: NgControl, private errorStateMatcher: ErrorStateMatcher) {
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+    private errorStateMatcher: ErrorStateMatcher,
+    private _elementRef: ElementRef<HTMLElement>,
+  ) {
     if (ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
   }
 
   get value() {
-    return this._value
+    return this._value;
   }
   set value(val: any) {
     this._value = val;
@@ -111,8 +127,30 @@ export class MultipleSelectComponent
   onChange = (_: any) => {};
   onTouched = () => {};
 
-  empty!: boolean;
-  shouldLabelFloat: boolean = true;
+  onFocusIn(event: FocusEvent) {
+    if (!this.focused) {
+      this.focused = true;
+      this.stateChanges.next();
+    }
+  }
+  
+  onFocusOut(event: FocusEvent) {
+    if (!this._elementRef.nativeElement.contains(event.relatedTarget as Element)) {
+      this.touched = true;
+      this.focused = false;
+      this.onTouched();
+      this.stateChanges.next();
+    }
+  }
+
+  get empty(): boolean {
+    return !this.selectTpl?.value
+  }
+
+  @HostBinding('class.floating')
+  get shouldLabelFloat() {
+    return this.focused || !this.empty;
+  }
 
   @Input()
   get required(): boolean {
@@ -183,6 +221,6 @@ export class MultipleSelectComponent
   }
 
   ngOnDestroy(): void {
-      this.stateChanges.unsubscribe();
+    this.stateChanges.unsubscribe();
   }
 }

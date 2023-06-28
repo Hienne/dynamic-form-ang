@@ -1,14 +1,36 @@
 <div [formGroup]="myForm" class="w-3/4 pt-5 mx-auto">
+  <!-- Dynamic normal form -->
   <ng-container *ngFor="let formItem of dynamicFormFields">
     <app-dynamic-form-field [formItem]="formItem"></app-dynamic-form-field>
   </ng-container>
+
+  <!-- Multiple select with all selection -->
+  <mat-form-field class="w-full">
+    <mat-label>Multiple select with all selection</mat-label>
+    <multiple-select
+      [formControl]="multipleSelectAll"
+      [options]="options"
+      optionLabel="label"
+      optionValue="value"
+    ></multiple-select>
+  </mat-form-field>
+
+  <!-- Infinite scroll dropdown -->
+  <mat-form-field class="w-full">
+    <mat-label>Infinite scroll selection</mat-label>
+    <app-infinite-scroll-selection
+      [formControl]="infiniteScrollSelection"
+      optionLabel="name"
+      optionValue="name"
+      [options]="passengers"
+      (emitter)="onScroll()"
+      [isLoading]="isLoading$ | async"
+    ></app-infinite-scroll-selection>
+  </mat-form-field>
 </div>
 
-<mat-form-field><em></em>
-  <mat-label>heh</mat-label>
-  <multiple-select [formControl]='test' [options]="options" optionLabel="label" optionValue="value"></multiple-select>
-</mat-form-field>
-
 <pre>
-  {{myForm.value | json}}
+  {{ myForm.value | json }}
+  {{ multipleSelectAll.value | json }}
+  {{ infiniteScrollSelection.value | json }}
 </pre>
