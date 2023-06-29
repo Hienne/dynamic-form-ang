@@ -1,12 +1,10 @@
-import { NumberFormatDirective } from './number-format.directive';
-import { TrimTextBoxDirective } from './trim-text-box.directive';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DecimalOnlyDirective } from './decimal-only.directive';
-import { NumberOnlyDirective } from './number-only.directive';
-import { DisabledControlDirective } from './disabled-control.directive';
-
-
+import { NumberFormatDirective } from './number-format.directive'
+import { TrimTextBoxDirective } from './trim-text-box.directive'
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { DecimalOnlyDirective } from './decimal-only.directive'
+import { NumberOnlyDirective } from './number-only.directive'
+import { DisabledControlDirective } from './disabled-control.directive'
 
 @NgModule({
   declarations: [
@@ -14,17 +12,15 @@ import { DisabledControlDirective } from './disabled-control.directive';
     NumberFormatDirective,
     DecimalOnlyDirective,
     NumberOnlyDirective,
-    DisabledControlDirective
+    DisabledControlDirective,
   ],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   exports: [
     TrimTextBoxDirective,
     NumberFormatDirective,
     DecimalOnlyDirective,
     NumberOnlyDirective,
-    DisabledControlDirective
-  ]
+    DisabledControlDirective,
+  ],
 })
-export class DirectivesModule { }
+export class DirectivesModule {}

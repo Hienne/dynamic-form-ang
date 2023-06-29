@@ -1,4 +1,4 @@
-import { Validators } from '@angular/forms';
+import { Validators } from '@angular/forms'
 import {
   DropdownField,
   TextBoxField,
@@ -7,7 +7,7 @@ import {
   DatepickerField,
   DaterangePickerField,
   SelectField,
-} from './dynamic-form-field/dynamic-form-field.model';
+} from './dynamic-form-field/dynamic-form-field.model'
 
 export const dynamicFormFields = [
   new DropdownField({
@@ -107,4 +107,4 @@ export const dynamicFormFields = [
     //   },
     // ],
   }),
-];
+]

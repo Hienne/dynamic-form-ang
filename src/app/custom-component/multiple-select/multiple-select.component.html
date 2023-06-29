@@ -18,8 +18,8 @@
     >
   </div>
   <mat-select-trigger>
-        {{ allSelected ? 'Tất cả' : ngControl.control?.value }}
-      </mat-select-trigger>
+    {{ allSelected ? 'Tất cả' : ngControl.control?.value }}
+  </mat-select-trigger>
   <mat-option *ngFor="let item of options" [value]="item[optionValue]">
     {{ item[optionLabel] }}
   </mat-option>

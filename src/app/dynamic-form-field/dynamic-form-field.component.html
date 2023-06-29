@@ -71,7 +71,9 @@
         [formControlName]="formItem.key"
         [disabledControl]="formItem.disabled"
       >
-        <ng-container *ngIf="isIterable(formItem.options); else isEnumerableRadio">
+        <ng-container
+          *ngIf="isIterable(formItem.options); else isEnumerableRadio"
+        >
           <mat-radio-button
             *ngFor="let option of formItem.options"
             [value]="option.key"
@@ -91,8 +93,12 @@
       </mat-radio-group>
     </div>
 
-    <mat-form-field *ngSwitchCase="'date'" [appearance]="appearance" [class]="formItem.cssClass">
-      <mat-label>{{formItem.label}}</mat-label>
+    <mat-form-field
+      *ngSwitchCase="'date'"
+      [appearance]="appearance"
+      [class]="formItem.cssClass"
+    >
+      <mat-label>{{ formItem.label }}</mat-label>
       <input
         matInput
         [matDatepicker]="datepicker"
@@ -118,35 +124,54 @@
       <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field *ngSwitchCase="'daterange'" [class]="formItem.cssClass" [appearance]="appearance">
-      <mat-label>{{formItem.label[0]}} - {{ formItem.label[1] }}</mat-label>
+    <mat-form-field
+      *ngSwitchCase="'daterange'"
+      [class]="formItem.cssClass"
+      [appearance]="appearance"
+    >
+      <mat-label>{{ formItem.label[0] }} - {{ formItem.label[1] }}</mat-label>
       <mat-date-range-input [rangePicker]="daterangePicker">
-        <input matStartDate
+        <input
+          matStartDate
           placeholder="Từ ngày"
           [formControlName]="formItem.key[0]"
-          readonly />
-        <input matEndDate
+          readonly
+        />
+        <input
+          matEndDate
           placeholder="Đến ngày"
           [formControlName]="formItem.key[1]"
-          readonly />
+          readonly
+        />
       </mat-date-range-input>
-      <button matSuffix
+      <button
+        matSuffix
         matDatepickerToggleIcon
         mat-icon-button
         type="button"
         [disabled]="formItem.disabled"
         (click)="clearDate($event, formItem.key)"
-        >
+      >
         <mat-icon fontIcon="clear"></mat-icon>
       </button>
-      <mat-datepicker-toggle matSuffix
-        [for]="daterangePicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="daterangePicker"
+      ></mat-datepicker-toggle>
       <mat-date-range-picker #daterangePicker></mat-date-range-picker>
     </mat-form-field>
 
-    <mat-form-field *ngSwitchCase="'select'" [class]="formItem.cssClass" [appearance]="appearance">
-      <mat-label>{{formItem.label}}</mat-label>
-      <mat-select [formControlName]="formItem.key" [disabledControl]="formItem.disabled" multiple>
+    <mat-form-field
+      *ngSwitchCase="'select'"
+      [class]="formItem.cssClass"
+      [appearance]="appearance"
+    >
+      <mat-label>{{ formItem.label }}</mat-label>
+      <mat-select
+        [formControlName]="formItem.key"
+        [disabledControl]="formItem.disabled"
+        multiple
+      >
         <ng-container
           *ngIf="isIterable(formItem.options); else isEnumerableDropdown"
         >

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
@@ -8,26 +8,26 @@ import {
   Optional,
   Self,
   ViewChild,
-} from '@angular/core';
+} from '@angular/core'
 import {
   AbstractControl,
   ControlValueAccessor,
   FormsModule,
   NgControl,
   ReactiveFormsModule,
-} from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ErrorStateMatcher, MatOption } from '@angular/material/core';
+} from '@angular/forms'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { ErrorStateMatcher, MatOption } from '@angular/material/core'
 import {
   MatFormFieldControl,
   MatFormFieldModule,
-} from '@angular/material/form-field';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { Subject } from 'rxjs';
+} from '@angular/material/form-field'
+import { MatSelect, MatSelectModule } from '@angular/material/select'
+import { Subject } from 'rxjs'
 
 export class CustomErrorMatcher implements ErrorStateMatcher {
   isErrorState(control: AbstractControl): boolean {
-    return control?.dirty && control.invalid;
+    return control?.dirty && control.invalid
   }
 }
 @Component({
@@ -64,82 +64,84 @@ export class CustomErrorMatcher implements ErrorStateMatcher {
 export class MultipleSelectComponent
   implements MatFormFieldControl<any>, ControlValueAccessor, OnDestroy
 {
-  static nextId = 0;
-  @ViewChild('select') selectTpl!: MatSelect;
+  static nextId = 0
+  @ViewChild('select') selectTpl!: MatSelect
 
-  @Input() optionValue = '';
-  @Input() optionLabel = '';
+  @Input() optionValue = ''
+  @Input() optionLabel = ''
   @Input()
   get allSelected(): boolean {
-    return this._allSelected;
+    return this._allSelected
   }
   set allSelected(val: boolean) {
-    this._allSelected = val;
+    this._allSelected = val
   }
-  private _allSelected = false;
+  private _allSelected = false
 
   @Input()
   get options() {
-    return this._options;
+    return this._options
   }
   set options(val: any) {
-    this._options = val;
+    this._options = val
     if (val?.length > 0) {
-      setTimeout(() => this.toggleAllSelection(), 0);
+      setTimeout(() => this.toggleAllSelection(), 0)
     }
   }
-  private _options: any[] | null = [];
+  private _options: any[] | null = []
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     private errorStateMatcher: ErrorStateMatcher,
-    private _elementRef: ElementRef<HTMLElement>,
+    private _elementRef: ElementRef<HTMLElement>
   ) {
     if (ngControl != null) {
-      this.ngControl.valueAccessor = this;
+      this.ngControl.valueAccessor = this
     }
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
   set value(val: any) {
-    this._value = val;
-    this.stateChanges.next();
-    this.onChange(this._value);
+    this._value = val
+    this.stateChanges.next()
+    this.onChange(this._value)
   }
-  private _value: any[] = [];
-  stateChanges = new Subject<void>();
-  id = `mc-multiple-select-${MultipleSelectComponent.nextId++}`;
+  private _value: any[] = []
+  stateChanges = new Subject<void>()
+  id = `mc-multiple-select-${MultipleSelectComponent.nextId++}`
 
   @Input()
   get placeholder(): string {
-    return this._placeholder;
+    return this._placeholder
   }
   set placeholder(value: string) {
-    this._placeholder = value;
-    this.stateChanges.next();
+    this._placeholder = value
+    this.stateChanges.next()
   }
-  private _placeholder!: string;
+  private _placeholder!: string
 
-  focused = false;
-  touched = false;
-  onChange = (_: any) => {};
-  onTouched = () => {};
+  focused = false
+  touched = false
+  onChange = (_: any) => {}
+  onTouched = () => {}
 
   onFocusIn(event: FocusEvent) {
     if (!this.focused) {
-      this.focused = true;
-      this.stateChanges.next();
+      this.focused = true
+      this.stateChanges.next()
     }
   }
-  
+
   onFocusOut(event: FocusEvent) {
-    if (!this._elementRef.nativeElement.contains(event.relatedTarget as Element)) {
-      this.touched = true;
-      this.focused = false;
-      this.onTouched();
-      this.stateChanges.next();
+    if (
+      !this._elementRef.nativeElement.contains(event.relatedTarget as Element)
+    ) {
+      this.touched = true
+      this.focused = false
+      this.onTouched()
+      this.stateChanges.next()
     }
   }
 
@@ -149,78 +151,78 @@ export class MultipleSelectComponent
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
-    return this.focused || !this.empty;
+    return this.focused || !this.empty
   }
 
   @Input()
   get required(): boolean {
-    return this._required;
+    return this._required
   }
   set required(val: boolean) {
-    this._required = val;
-    this.stateChanges.next();
+    this._required = val
+    this.stateChanges.next()
   }
-  private _required = false;
+  private _required = false
 
   @Input()
   get disabled(): boolean {
-    return this._disabled;
+    return this._disabled
   }
   set disabled(val: boolean) {
-    this._disabled = val;
-    this.stateChanges.next();
+    this._disabled = val
+    this.stateChanges.next()
   }
-  private _disabled = false;
+  private _disabled = false
 
   get errorState(): boolean {
-    return this.errorStateMatcher.isErrorState(this.ngControl.control, null);
+    return this.errorStateMatcher.isErrorState(this.ngControl.control, null)
   }
-  controlType = 'mc-multiple-select';
+  controlType = 'mc-multiple-select'
   setDescribedByIds(ids: string[]): void {}
   onContainerClick(event: MouseEvent): void {}
 
   onSelectAll() {
-    this.allSelected = !this.allSelected;
-    this.toggleAllSelection();
+    this.allSelected = !this.allSelected
+    this.toggleAllSelection()
   }
 
   toggleAllSelection() {
     if (this.allSelected) {
-      this.selectTpl.options.forEach((item: MatOption) => item.select());
+      this.selectTpl.options.forEach((item: MatOption) => item.select())
     } else {
-      this.selectTpl.options.forEach((item: MatOption) => item.deselect());
+      this.selectTpl.options.forEach((item: MatOption) => item.deselect())
     }
 
-    this.value = this.selectTpl.value;
+    this.value = this.selectTpl.value
   }
 
   onSelectionChange() {
     if (this.options && this.selectTpl.value.length === this.options.length) {
-      this.allSelected = true;
+      this.allSelected = true
     } else {
-      this.allSelected = false;
+      this.allSelected = false
     }
 
-    this.value = this.selectTpl.value;
+    this.value = this.selectTpl.value
   }
 
   writeValue(selectedItem: any[]): void {
-    this.value = selectedItem;
+    this.value = selectedItem
   }
 
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this.onChange = fn
   }
 
   registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+    this.onTouched = fn
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled = isDisabled
   }
 
   ngOnDestroy(): void {
-    this.stateChanges.unsubscribe();
+    this.stateChanges.unsubscribe()
   }
 }
