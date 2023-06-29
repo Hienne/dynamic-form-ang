@@ -68,7 +68,11 @@ export class AppComponent implements OnInit {
   }
 
   onScroll() {
-    this.isLoading$.next(true);this.page++;fetchPassenger(this.http, this.page).pipe(map((res) => res.data)).subscribe((res) => {
+    this.isLoading$.next(true)
+    this.page++
+    fetchPassenger(this.http, this.page)
+      .pipe(map((res) => res.data))
+      .subscribe((res) => {
         this.passengers = [...this.passengers, ...res]
         this.isLoading$.next(false)
       })
