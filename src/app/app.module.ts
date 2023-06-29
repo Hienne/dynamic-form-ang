@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { InfiniteScrollSelectionComponent } from './custom-component/infinite-scroll-selection/infinite-scroll-selection.component';
 import { InfiniteScrollComponent } from './custom-component/infinite-scroll/infinite-scroll.component';
 import { MultipleSelectComponent } from './custom-component/multiple-select/multiple-select.component';
+import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { MultipleSelectComponent } from './custom-component/multiple-select/mult
     MultipleSelectComponent,
     InfiniteScrollComponent,
     InfiniteScrollSelectionComponent,
+    InfiniteScrollDirective,
 
     MatFormFieldModule,
     MatSelectModule,

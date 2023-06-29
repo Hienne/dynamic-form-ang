@@ -27,6 +27,19 @@
       [isLoading]="isLoading$ | async"
     ></app-infinite-scroll-selection>
   </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>Infinite scroll selection directive</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let item of passengers" value="item.name">{{
+        item.name
+      }}</mat-option>
+      <div (onScroll)="onScroll()"></div>
+      <mat-option *ngIf="isLoading$ | async" [value]="">
+        <mat-spinner diameter="20"></mat-spinner>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <pre>
